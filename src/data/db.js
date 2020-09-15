@@ -1,16 +1,16 @@
 var mysql = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost',
-    user: 'me',
-    password: 'secret',
-    database: 'my_db'
+    user: 'web',
+    password: 'gsGS6467!@',
+    database: 'web'
 });
 
 connection.connect();
 
-connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
+connection.query('SELECT * FROM user', function (error, results) {
     if (error) throw error;
-    console.log('The solution is: ', results[0].solution);
+    console.log('The solution is: ', results);
 });
 
 connection.end();

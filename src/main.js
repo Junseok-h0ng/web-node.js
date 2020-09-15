@@ -3,8 +3,7 @@ const ejs = require('ejs');
 const bodyParser = require('body-parser');
 const app = express()
 
-const port = 80
-
+const port = 80;
 app.set('view engine', 'ejs');
 app.set('views', './views')
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -17,6 +16,7 @@ app.use(express.static('../public'));
 app.get('/', (req, res) => { // (3)
     res.render("index.ejs");
 });
+app.use('/user/login', require('./router/user/login'));
 
 app.listen(port, () => { // (2)
     console.log('server is running localhost:8080');
