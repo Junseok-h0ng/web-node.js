@@ -16,8 +16,9 @@ app.use(express.static('../public'));
 app.get('/', (req, res) => { // (3)
     res.render("index.ejs");
 });
-app.use('/user/login', require('./router/user/login'));
+app.use('/user', require('./router/user'));
+app.use('/topic', require('./router/topic'));
 
 app.listen(port, () => { // (2)
-    console.log('server is running localhost:8080');
+    console.log('server is running localhost:80');
 });
