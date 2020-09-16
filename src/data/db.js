@@ -7,10 +7,12 @@ var connection = mysql.createConnection({
 });
 
 connection.connect();
+module.exports = {
+    user: function (email, callback) {
+        connection.query('SELECT * FROM user WHERE email = ?', [email], function (error, user) {
+            if (error) throw error;
+            return callback(null, user);
+        });
 
-connection.query('SELECT * FROM user', function (error, results) {
-    if (error) throw error;
-    console.log('The solution is: ', results);
-});
-
-connection.end();
+    }
+}
