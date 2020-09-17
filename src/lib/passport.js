@@ -8,11 +8,12 @@ module.exports = function (app) {
     app.use(passport.session());
 
     passport.serializeUser(function (user, done) {
-        console.log('ee');
         done(null, user.id);
     });
     passport.deserializeUser(function (id, done) {
-        console.log(id);
+        db.user('id', id, (err, user) => {
+            return done(null, user[0]);
+        });
     });
 
     passport.use(new LocalStrategy({
@@ -20,7 +21,7 @@ module.exports = function (app) {
         passwordField: 'password'
     }, function (email, password, done) {
 
-        db.user(email, (err, user) => {
+        db.user('email', email, (err, user) => {
             if (user[0].email === email) {
                 return done(null, user[0]);
             } else {

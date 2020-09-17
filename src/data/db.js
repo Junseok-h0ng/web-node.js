@@ -8,11 +8,10 @@ var connection = mysql.createConnection({
 
 connection.connect();
 module.exports = {
-    user: function (email, callback) {
-        connection.query('SELECT * FROM user WHERE email = ?', [email], function (error, user) {
+    user: function (where, id, callback) {
+        connection.query(`SELECT * FROM user WHERE ${where} = ?`, [id], function (error, user) {
             if (error) throw error;
             return callback(null, user);
         });
-
     }
 }
