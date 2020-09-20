@@ -1,4 +1,6 @@
 const db = require('../data/db');
+const bcrypt = require('bcrypt');
+const shortid = require('shortid');
 
 module.exports = function (app) {
     const passport = require('passport')
@@ -22,11 +24,15 @@ module.exports = function (app) {
     }, function (email, password, done) {
 
         db.user('email', email, (err, user) => {
-            if (user[0].email === email) {
-                return done(null, user[0]);
-            } else {
-                return done(null, false);
-            };
+            if (user[0]) {
+                bcrypt.compare(password, user[0].pwd, (err, result) => {
+                    if (result) {
+                        return done(null, user[0]);
+                    } else {
+                        return done(null, false);
+                    }
+                });
+            }
         })
     }
     ));
@@ -35,9 +41,23 @@ module.exports = function (app) {
         passport.authenticate('local', {
             successRedirect: '/',
             failureRedirect: '/user/login',
-            failureFlash: true
         })
     );
-
+    app.get('/register', function (req, res) {
+        res.redirect('/');
+    })
+    app.post('/register', function (req, res) {
+        const user = req.body;
+        const id = shortid.generate();
+        bcrypt.hash(user.password, 10, (err, pwd) => {
+            db.insertUser(id, user, pwd)
+        });
+        res.redirect('/');
+    })
+    app.get(`/logout`, function (req, res) {
+        req.logout();
+        req.session.save(function () {
+            res.redirect('/');
+        });
+    });
 }
-

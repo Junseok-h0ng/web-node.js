@@ -23,12 +23,27 @@ app.use(express.static('../public'));
 require('./lib/passport')(app);
 
 app.get('/', (req, res) => { // (3)
-    console.log(auth.isOwner(req));
-    res.render("index.ejs");
+    res.render("index.ejs", {
+        userStatus: auth.status(req)
+    });
 });
+// app.post('/register',function(req,res){
+//     const user = req.body;
+//     // const id = shortid.generate();
+//     // bcrypt.hash(user.password,10,(err,pwd)=>{
+//         // db.insertUser(id,user,pwd)
+//     // });
+//     res.redirect('/'); 
+// })
 app.use('/user', require('./router/user'));
 app.use('/topic', require('./router/topic'));
 
 app.listen(port, () => { // (2)
     console.log('server is running localhost:80');
 });
+
+
+//sessions으로 user값 넘기기 완료
+//로그인 상태창 변경 예정
+//로그인 암호화 예정
+//회원가입 프로세스 예정

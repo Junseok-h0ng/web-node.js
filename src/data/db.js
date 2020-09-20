@@ -13,5 +13,9 @@ module.exports = {
             if (error) throw error;
             return callback(null, user);
         });
+    },
+    insertUser : function(id,user,pwd){
+        const sql = 'INSERT INTO user(id,displayname,email,pwd,type) VALUES(?,?,?,?,?)';
+        connection.query(sql,[id,user.displayname,user.email,pwd,user.type]);
     }
 }
