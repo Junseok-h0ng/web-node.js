@@ -1,7 +1,6 @@
 const db = require('../data/db');
 const bcrypt = require('bcrypt');
 const shortid = require('shortid');
-const flash = require('connect-flash');
 
 module.exports = function (app) {
     const passport = require('passport')
@@ -48,6 +47,7 @@ module.exports = function (app) {
         passport.authenticate('local', {
             successRedirect: '/',
             failureRedirect: '/user/login',
+            failureFlash: true
         })
     );
     app.post('/register', function (req, res) {
@@ -55,12 +55,12 @@ module.exports = function (app) {
         const id = shortid.generate();
 
         if (user.password != user.password2) {
-            req.flash('message', '입력한 비밀번호가 서로 맞지 않습니다.');
+            req.flash('error', '입력한 비밀번호가 서로 맞지 않습니다.');
             res.redirect('/user/register');
         }
         db.user('email', user.email, (err, user) => {
             if (user[0]) {
-                req.flash('message', '이미 있는 이메일 입니다.')
+                req.flash('error', '이미 있는 이메일 입니다.')
                 res.redirect('/user/register');
             }
         });

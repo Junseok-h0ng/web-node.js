@@ -7,6 +7,11 @@ router.get('/', function (req, res) {
         userStatus: auth.status(req)
     });
 });
+router.get('/create', function (req, res) {
+    res.render('topic/create', {
+        userStatus: auth.status(req)
+    })
+})
 router.get('/:title', function (req, res) {
     res.render('topic/topic');
 })

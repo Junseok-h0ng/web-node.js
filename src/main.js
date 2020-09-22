@@ -31,9 +31,6 @@ app.get('/', (req, res) => { // (3)
         userStatus: auth.status(req)
     });
 });
-app.get('/alert', function (req, res) {
-    res.send(req.flash('message'));
-})
 
 app.use('/user', require('./router/user'));
 app.use('/topic', require('./router/topic'));
@@ -53,5 +50,9 @@ app.listen(port, () => { // (2)
 //회원가입 중복 처리(modal) 완료
 //로그인 상태창 displayname 표시 완료
 //------------------------------------------ 2020/09/21
+//로그인 실패 처리 완료
+//user 페이지 구현 완료
+//------------------------------------------ 2020/09/22
+//user 페이지 create 구현 예정
 //programming, topic 구현 예정
-//로그인 실패 처리 예정
+
