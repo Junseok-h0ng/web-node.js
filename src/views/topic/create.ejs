@@ -13,8 +13,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <link rel="stylesheet" href="../css/nicepage.css" media="screen">
-    <link rel="stylesheet" href="../create.css" media="screen">
+    <link rel="stylesheet" href="../../css/nicepage.css" media="screen">
+    <link rel="stylesheet" href="../../css/create.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 2.25.0, nicepage.com">
@@ -34,51 +34,25 @@
     <meta name="theme-color" content="#478ac9">
     <link rel="canonical" href="index.html">
     <meta property="og:url" content="index.html">
+    <style>
+        .note-editor{
+            margin-bottom:0px;
+        }
+        input{
+            margin:5px;
+        }
+    </style>
 </head>
 
 <body class="u-body">
     <header class="u-align-left u-clearfix u-grey-90 u-header u-header" id="sec-ecdc">
         <%- include('../part/header.ejs') %>
     </header>
-    <section class="u-clearfix u-section-1" id="sec-2fbe">
-        <div class="u-clearfix u-sheet u-sheet-1">
-            <div class="u-form u-form-1">
-                <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"
-                    style="padding: 10px" source="custom" name="form">
-                    <input type="hidden" id="siteId" name="siteId" value="18096480">
-                    <input type="hidden" id="pageId" name="pageId" value="176768791">
-                    <div class="u-form-group u-form-group-1">
-                        <label for="text-4daf" class="u-form-control-hidden u-label"></label>
-                        <input type="text" placeholder="" id="text-4daf" name="title"
-                            class="u-border-1 u-border-grey-30 u-border-radius-10 u-input u-input-rectangle u-white"
-                            autofocus="autofocus" required="required">
-                    </div>
-                    <div id="summernote">
-                        <p>Hello Summernote</p>
-                    </div>
-                    <script>
-                        $(document).ready(function () {
-                            $('#summernote').summernote();
-                        });
-                        $('#summernote').summernote({
-                            height: 500,   //set editable area's height
-                            width: inheritance
-                        });
-                    </script>
-                    <div class="u-align-left u-form-group u-form-submit">
-                        <a href="#"
-                            class="u-border-radius-10 u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-1-dark-1 u-palette-1-base u-btn-1">Submit</a>
-                        <input type="submit" value="submit" class="u-form-control-hidden">
-                    </div>
-                    <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
-                    <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors
-                        then try
-                        again. </div>
-                    <input type="hidden" value="" name="recaptchaResponse">
-                </form>
-            </div>
-        </div>
-    </section>
+    <form action="/topic/create/<%- userID %>" method="POST">
+        <input name="title" placeholder="title"  autofocus="autofocus">
+        <textarea id="summernote" name="description"></textarea>
+        <input type="submit" value="save">
+    </form>
 
 
     <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-c00f">
@@ -97,6 +71,14 @@
             <span>Nicepage</span>
         </a>.
     </section>
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote();
+        });
+        $('#summernote').summernote({
+            height: 500,   //set editable area's height
+        });
+    </script>
 </body>
 
 </html>

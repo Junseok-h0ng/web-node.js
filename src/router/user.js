@@ -2,11 +2,7 @@ const express = require('express');
 const auth = require('../lib/auth');
 const router = express.Router();
 
-router.get('/:userID', function (req, res) {
-    res.render('user/user_page', {
-        userStatus: auth.status(req)
-    })
-})
+
 
 router.get('/login', function (req, res) {
     res.render('user/login', {
@@ -18,5 +14,10 @@ router.get('/register', function (req, res) {
         modal: req.flash('error')
     });
 })
-
+router.get('/:userID', function (req, res) {
+    res.render('user/user_page', {
+        userStatus: auth.status(req),
+        userID : req.params.userID
+    })
+})
 module.exports = router;
