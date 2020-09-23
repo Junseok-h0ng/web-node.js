@@ -36,9 +36,12 @@
 @media (max-width: 767px){ .u-section-2 .u-sheet-1 {min-height: 315px}
 .u-section-2 .u-container-layout-1 {padding-left: 10px; padding-right: 10px}
 .u-section-2 .u-container-layout-2 {padding-left: 10px; padding-right: 10px}
-.u-section-2 .u-btn-1 {margin-left: auto} }
+.u-section-2 .u-btn-1 {margin-left: auto}
+.u-section-2 .u-text-3 {width: auto; margin-right: 27px; margin-left: 357px}
+.u-section-2 .u-text-4 {width: auto; margin-right: 341px; margin-left: 12px} }
 
-@media (max-width: 575px){ .u-section-2 .u-text-3 {margin-left: 184px}
-.u-section-2 .u-text-4 {margin-right: 44px; margin-left: 109px} }.u-section-3 .u-sheet-1 {min-height: 105px} 
+@media (max-width: 575px){ .u-section-2 .u-btn-1 {margin-top: 7px}
+.u-section-2 .u-text-3 {margin-top: 0; margin-right: 10px; margin-left: 174px}
+.u-section-2 .u-text-4 {margin: -21px 153px -14px 0} }.u-section-3 .u-sheet-1 {min-height: 105px} 
 
 @media (max-width: 1199px){ .u-section-3 .u-pagination-1 {margin-left: auto; margin-right: auto} }

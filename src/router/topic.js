@@ -2,12 +2,17 @@ const express = require('express');
 const shortid = require('shortid');
 const db = require('../data/db');
 const auth = require('../lib/auth');
+const sanitizeHtml = require('sanitize-html');
 const router = express.Router();
 
 router.get('/', function (req, res) {
-    res.render('topic/programming', {
-        userStatus: auth.status(req)
+    db.topicList((err, topic) => {
+        res.render('topic/programming', {
+            userStatus: auth.status(req),
+            topic: topic
+        });
     });
+
 });
 
 router.get('/create/:userID', function (req, res) {
@@ -17,19 +22,28 @@ router.get('/create/:userID', function (req, res) {
     })
 })
 
-router.get('/:title', function (req, res) {
-    res.render('topic/topic');
+router.get('/:pageID', function (req, res) {
+    const pageID = req.params.pageID
+    db.topic(pageID, (err, topic) => {
+        console.log(topic);
+        res.render('topic/topic', {
+            userStatus: auth.status(req),
+            topic: topic[0]
+        });
+    })
+
 })
 
-router.post('/create/:userID',function(req,res){
+router.post('/create/:userID', function (req, res) {
     const post = req.body;
     const info = {
         id: shortid.generate(),
-        title : post.title,
-        description : post.description,
-        userID : req.params.userID
+        title: sanitizeHtml(post.title),
+        description: sanitizeHtml(post.description),
+        userID: req.params.userID
     }
     db.insertTopic(info);
+    res.redirect(`/topic/${info.id}`);
 })
 
 module.exports = router;

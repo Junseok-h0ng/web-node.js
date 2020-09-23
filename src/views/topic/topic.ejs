@@ -40,7 +40,7 @@
   <section class="u-align-center u-clearfix u-image u-shading u-section-1" src="" data-image-width="1280"
     data-image-height="1183" id="sec-293d">
     <div class="u-clearfix u-sheet u-sheet-1">
-      <h1 class="u-text u-title u-text-1">Title</h1>
+      <h1 class="u-text u-text-default u-title u-text-1"><%- topic.title %></h1>
     </div>
   </section>
   <section class=" u-clearfix u-valign-bottom u-section-2" id="sec-e2c3">
@@ -49,12 +49,14 @@
         <div class="u-layout-row">
           <div class="u-container-style u-layout-cell u-left-cell u-size-11 u-layout-cell-1">
             <div class="  u-container-layout u-container-layout-1">
-              fdfs
+              subtopics
             </div>
           </div>
           <div class="u-container-style u-layout-cell u-right-cell u-size-49 u-layout-cell-2">
             <div class=" u-container-layout u-container-layout-2">
-              dasdas
+              <p>
+                <%- topic.description %>
+              </p>
             </div>
           </div>
         </div>
