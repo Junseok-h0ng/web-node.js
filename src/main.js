@@ -37,7 +37,7 @@ app.use('/topic', require('./router/topic'));
 
 
 const port = 80;
-app.listen(port, () => { // (2)
+app.listen(port, () => {
     console.log('server is running localhost:80');
 });
 
@@ -53,6 +53,11 @@ app.listen(port, () => { // (2)
 //로그인 실패 처리 완료
 //user 페이지 구현 완료
 //------------------------------------------ 2020/09/22
-//user 페이지 create 구현 예정
-//programming, topic 구현 예정
-
+//토픽 생성 완료
+//create 폼 완료
+//user 페이지 create  완료
+//programming, topic  완료
+//------------------------------------------ 2020/09/23
+//sanitize-html 위험요소 제거 예정
+//topic 내용 컨테이너 초과 방지 예정
+//topic user db 연동 예정(displayname)

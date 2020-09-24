@@ -16,16 +16,25 @@ router.get('/', function (req, res) {
 });
 
 router.get('/create/:userID', function (req, res) {
-    res.render('topic/create', {
-        userStatus: auth.status(req),
-        userID: req.params.userID
-    })
+    const userID = req.params.userID;
+    db.user('id', userID, (err, user) => {
+        //잘못된 아이디 접근시 에러 처리
+        if (user[0] == undefined) { return res.redirect('/topic'); }
+
+        res.render('topic/create', {
+            userStatus: auth.status(req),
+            userID: req.params.userID
+        });
+    });
+
 })
 
 router.get('/:pageID', function (req, res) {
-    const pageID = req.params.pageID
+    const pageID = req.params.pageID;
     db.topic(pageID, (err, topic) => {
-        console.log(topic);
+        //잘못된 접근시 에러 처리
+        if (topic[0] == undefined) { return res.redirect('/topic'); }
+
         res.render('topic/topic', {
             userStatus: auth.status(req),
             topic: topic[0]
