@@ -24,7 +24,7 @@ module.exports = {
         connection.query(sql, [info.id, info.title, info.description, info.userID]);
     },
     topicList: function (callback) {
-        const sql = 'SELECT * FROM topic';
+        const sql = 'SELECT topic.*,user.displayname FROM topic LEFT JOIN user ON topic.user_id = user.id';
         connection.query(sql, (err, topic) => {
             if (err) throw err;
             return callback(null, topic);

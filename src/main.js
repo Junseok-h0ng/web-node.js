@@ -58,6 +58,10 @@ app.listen(port, () => {
 //user 페이지 create  완료
 //programming, topic  완료
 //------------------------------------------ 2020/09/23
-//sanitize-html 위험요소 제거 예정
-//topic 내용 컨테이너 초과 방지 예정
-//topic user db 연동 예정(displayname)
+//topic,create 접근 에러 처리 완료
+//sanitize-html 위험요소 제거 완료
+//topic 내용 컨테이너 초과 방지 완료
+//topic user db 연동(displayname) 완료
+//------------------------------------------ 2020/09/24
+//user page 메뉴(user의 글목록,계정 패스워드 변경, 계정 삭제)
+//programming 페이지 3개의 테이블 씩 출력 및 다음페이지 이동

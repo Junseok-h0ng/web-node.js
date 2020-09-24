@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.get('/', function (req, res) {
     db.topicList((err, topic) => {
+        console.log(topic);
         res.render('topic/programming', {
             userStatus: auth.status(req),
             topic: topic
@@ -15,6 +16,7 @@ router.get('/', function (req, res) {
 
 });
 
+//생성 페이지
 router.get('/create/:userID', function (req, res) {
     const userID = req.params.userID;
     db.user('id', userID, (err, user) => {
@@ -43,6 +45,7 @@ router.get('/:pageID', function (req, res) {
 
 })
 
+//생성 프로세스
 router.post('/create/:userID', function (req, res) {
     const post = req.body;
     const info = {
