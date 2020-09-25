@@ -63,5 +63,9 @@ app.listen(port, () => {
 //topic 내용 컨테이너 초과 방지 완료
 //topic user db 연동(displayname) 완료
 //------------------------------------------ 2020/09/24
+//user page에서 글목록 구현 완료 -> update, delete 작업 완료
+//user create,update 잘못된 접근시 에러 처리(토픽 작성자가 아닐시)
 //user page 메뉴(user의 글목록,계정 패스워드 변경, 계정 삭제)
+
 //programming 페이지 3개의 테이블 씩 출력 및 다음페이지 이동
+//user register시 한글포함되면 에러 발생

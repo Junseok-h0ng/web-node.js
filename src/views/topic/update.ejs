@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>update</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <link rel="stylesheet" href="../../css/nicepage.css" media="screen">
+    <link rel="stylesheet" href="../../css/create.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 2.25.0, nicepage.com">
+
+
+    <link id="u-theme-google-font" rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "Site1",
+		"url": "index.html",
+		"logo": "images/53e5d3404d55a914f6da8c7dda793678153bdee757596c48732f7bd49f4fcd59be_1280.jpg"
+}</script>
+    <meta property="og:title" content="update">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
+    <style>
+        .note-editor {
+            margin-bottom: 0px;
+        }
+
+        input {
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body class="u-body">
+    <header class="u-align-left u-clearfix u-grey-90 u-header u-header" id="sec-ecdc">
+        <%- include('../part/header.ejs') %>
+    </header>
+    <form action="/topic/update/<%- pageID %>" method="POST">
+        <input name="title" placeholder="title" autofocus="autofocus" value="<%- topic.title %>">
+        <textarea id="summernote" name="description"><%- topic.description %></textarea>
+        <input type="submit" value="save">
+    </form>
+
+
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-c00f">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <p class="u-small-text u-text u-text-variant u-text-1">Sample footer text</p>
+        </div>
+    </footer>
+    <script>
+        $(document).ready(function () {
+            $('#summernote').summernote();
+        });
+        $('#summernote').summernote({
+            height: 500,   //set editable area's height
+        });
+    </script>
+</body>
+
+</html>

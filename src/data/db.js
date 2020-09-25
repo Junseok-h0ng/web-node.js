@@ -23,6 +23,14 @@ module.exports = {
         const sql = 'INSERT INTO topic(id,title,description,user_id,created) VALUES(?,?,?,?,NOW())'
         connection.query(sql, [info.id, info.title, info.description, info.userID]);
     },
+    updateTopic: function (info) {
+        const sql = 'UPDATE topic set title=?,description=?,created=NOW() WHERE id = ?';
+        connection.query(sql, [info.title, info.description, info.id]);
+    },
+    deleteTopic: function (pageID) {
+        const sql = 'DELETE FROM topic WHERE id = ?';
+        connection.query(sql, [pageID]);
+    },
     topicList: function (callback) {
         const sql = 'SELECT topic.*,user.displayname FROM topic LEFT JOIN user ON topic.user_id = user.id';
         connection.query(sql, (err, topic) => {
@@ -33,6 +41,13 @@ module.exports = {
     topic: function (id, callback) {
         const sql = 'SELECT * FROM topic WHERE id = ?';
         connection.query(sql, [id], (err, topic) => {
+            if (err) throw err;
+            return callback(null, topic);
+        })
+    },
+    userTopic: function (userID, callback) {
+        const sql = 'SELECT * FROM topic WHERE user_id =?';
+        connection.query(sql, [userID], (err, topic) => {
             if (err) throw err;
             return callback(null, topic);
         })

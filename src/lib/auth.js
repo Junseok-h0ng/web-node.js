@@ -1,6 +1,8 @@
 module.exports = {
-    isOwner: function (req) {
-        if (req.user) {
+    isOwner: function (req, userID) {
+
+        const loginedUser = req.user.id;
+        if (loginedUser == userID) {
             return true;
         } else {
             return false;
