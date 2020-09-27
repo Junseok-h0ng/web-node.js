@@ -5,6 +5,15 @@ const auth = require('../lib/auth');
 const sanitizeHtml = require('sanitize-html');
 const router = express.Router();
 
+function isWrongAccess(req, userID) {
+    if (!auth.isOwner(req, userID)) {
+        req.flash('message', '잘못된 아이디로 접근했습니다.');
+        return true;
+    } else {
+        return false;
+    }
+}
+
 router.get('/', function (req, res) {
     db.topicList((err, topic) => {
         res.render('topic/programming', {
@@ -18,9 +27,8 @@ router.get('/', function (req, res) {
 //생성 페이지
 router.get('/create/:userID', (req, res) => {
     const userID = req.params.userID;
-
     //잘못된 아이디 접근시 에러 처리
-    if (!auth.isOwner(req, userID)) { return res.redirect('/'); }
+    if (isWrongAccess(req, userID)) { return res.redirect('/'); }
 
     res.render('topic/create', {
         userStatus: auth.status(req),
@@ -35,9 +43,10 @@ router.get('/update/:pageID', (req, res) => {
         if (topic[0]) {
             const userID = topic[0].user_id;
             //topic의 작성자가 아닐경우
-            if (!auth.isOwner(req, userID)) { return res.redirect('/'); }
+            if (isWrongAccess(req, userID)) { return res.redirect('/'); }
         } else {
             //토픽이 없을경우
+            req.flash('message', '존재하지 않는 토픽입니다.');
             return res.redirect('/');
         }
         res.render('topic/update', {
@@ -51,8 +60,10 @@ router.get('/:pageID', (req, res) => {
     const pageID = req.params.pageID;
     db.topic(pageID, (err, topic) => {
         //잘못된 접근시 에러 처리
-        if (topic[0] == undefined) { return res.redirect('/topic'); }
-
+        if (topic[0] == undefined) {
+            req.flash('message', '비정상적인 접근 입니다.');
+            return res.redirect('/');
+        }
         res.render('topic/topic', {
             userStatus: auth.status(req),
             topic: topic[0]
