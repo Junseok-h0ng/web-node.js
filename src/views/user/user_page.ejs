@@ -67,20 +67,33 @@
       </nav>
     </div>
   </section>
+
+  <%- include('../part/modal.ejs') %>
   <%if(mod instanceof Object){%>
   <%- include('./part/list') %>
   <%}else{%>
   <%-include('./part/'+mod)%>
   <%}%>
 
-
-
-
   <footer class=" u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-c00f">
     <div class="u-clearfix u-sheet u-sheet-1">
       <p class="u-small-text u-text u-text-variant u-text-1">Sample footer text</p>
     </div>
   </footer>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+  <% if (modal[0]){ %>
+  <script>
+    $('#modal').modal('show');
+  </script>
+  <%}%>
 </body>
 
 </html>

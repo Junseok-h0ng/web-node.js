@@ -28,7 +28,8 @@ require('./lib/passport')(app);
 
 app.get('/', (req, res) => { // (3)
     res.render("index.ejs", {
-        userStatus: auth.status(req)
+        userStatus: auth.status(req),
+        modal: req.flash('message')
     });
 });
 

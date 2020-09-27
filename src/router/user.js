@@ -9,7 +9,8 @@ function renderPage(req, res, mod) {
     res.render('user/user_page', {
         userStatus: auth.status(req),
         userID: userID,
-        mod: mod
+        mod: mod,
+        modal: req.flash('error')
     });
 
 }
@@ -31,7 +32,6 @@ router.get('/change/:userID', (req, res) => {
     renderPage(req, res, 'change');
 });
 router.get('/:userID', (req, res) => {
-
     const userID = req.params.userID;
     db.userTopic(userID, (err, topic) => {
         renderPage(req, res, topic);
@@ -43,25 +43,28 @@ router.post('/delete/:userID', (req, res) => {
     const pwd = post.password;
     const pwd2 = post.password2;
     const userID = req.params.userID;
-    if (pwd === pwd2) {
-        db.user('id', userID, (err, user) => {
-            bcrypt.compare(pwd, user[0].pwd, (err, result) => {
-                //패스워드 일치시 계정 삭제
-                if (result) {
+    db.user('id', userID, (err, user) => {
+        bcrypt.compare(pwd, user[0].pwd, (err, result) => {
+            //패스워드 일치시 계정 삭제
+            if (result) {
+                if (pwd == pwd2) {
                     req.logout();
                     req.session.save(() => {
                         db.deleteUser(userID);
                         //계정으로 작성한 글 삭제 추가해야함
+                        req.flash('message', '정상적으로 삭제되었습니다.');
                         res.redirect('/');
                     });
                 } else {
-                    //패스워드 불일치
-                    //모달로 경고창 띄우기
-                    res.redirect('/');
+                    req.flash('error', '입력한 비밀번호가 서로 맞지 않습니다.');
+                    res.redirect(`/user/delete/${userID}`);
                 }
-            });
+            } else {
+                req.flash('error', '잘못된 비밀번호입니다.');
+                res.redirect(`/user/delete/${userID}`);
+            }
         });
-    }
+    });
 });
 router.post('/change/:userID', (req, res) => {
     const userID = req.params.userID;
@@ -69,11 +72,8 @@ router.post('/change/:userID', (req, res) => {
     const oldPwd = post.oldPassword;
     const newPwd = post.newPassword;
     const newPwd2 = post.newPassword2;
-    console.log(oldPwd);
     db.user('id', userID, (err, user) => {
-        console.log(user[0]);
         bcrypt.compare(oldPwd, user[0].pwd, (err, result) => {
-            console.log(result);
             //기존 패스워드 일치
             if (result) {
                 console.log(result);
@@ -81,14 +81,17 @@ router.post('/change/:userID', (req, res) => {
                 if (newPwd === newPwd2) {
                     bcrypt.hash(newPwd, 10, (err, newPwd) => {
                         db.changePwdUser(newPwd, userID);
+                        req.flash('message', '정상적으로 변경되었습니다.');
                         res.redirect('/');
                     });
                 } else {
                     //패스워드 불일치
-                    //모달로 경고창 띄우기
-                    res.redirect('/');
+                    req.flash('error', '입력한 비밀번호가 서로 맞지 않습니다.');
+                    res.redirect(`/user/change/${userID}`);
                 }
-
+            } else {
+                req.flash('error', '기존 패스워드가 맞지 않습니다.');
+                res.redirect(`/user/change/${userID}`);
             }
         })
     });
