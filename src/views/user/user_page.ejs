@@ -8,11 +8,12 @@
   <meta name="description" content="">
   <meta name="page_type" content="np-template-header-footer-from-plugin">
   <title>user_page</title>
-  <link rel="stylesheet" href="../css/nicepage.css" media="screen">
-  <link rel="stylesheet" href="../css/user_page.css" media="screen">
-  <script class="u-script" type="text/javascript" src="../javascripts/jquery.js" defer=""></script>
-  <script class="u-script" type="text/javascript" src="../javascripts/nicepage.js" defer=""></script>
+  <link rel="stylesheet" href="../../css/nicepage.css" media="screen">
+  <link rel="stylesheet" href="../../css/user_page.css" media="screen">
+  <script class="u-script" type="text/javascript" src="../../javascripts/jquery.js" defer=""></script>
+  <script class="u-script" type="text/javascript" src="../../javascripts/nicepage.js" defer=""></script>
   <meta name="generator" content="Nicepage 2.25.0, nicepage.com">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link id="u-theme-google-font" rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
   <script type="application/ld+json">{
@@ -47,19 +48,35 @@
     </div>
   </section>
   <section class="u-align-left u-clearfix u-section-2" id="sec-0e7b">
-    <div class="u-clearfix u-sheet u-sheet-1"></div>
-  </section>
-  <%- include('../part/topicList.ejs') %>
-  <section class="u-clearfix u-section-3" id="sec-0c25">
     <div class="u-clearfix u-sheet u-sheet-1">
-      <a href="/topic/create/<%- userID %>"
-        class="u-border-2 u-border-black u-btn u-button-style u-hover-black u-none u-text-black u-text-hover-white u-btn-4">create</a>
+      <nav>
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="/user/<%- userID %>">글목록</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/user/change/<%- userID %>">패스워드 변경</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/user/delete/<%- userID %>">계정 삭제</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </section>
-  <section class="u-clearfix u-section-4" id="carousel_e6dc"></section>
+  <%if(mod instanceof Object){%>
+  <%- include('./part/list') %>
+  <%}else{%>
+  <%-include('./part/'+mod)%>
+  <%}%>
 
 
-  <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-c00f">
+
+
+  <footer class=" u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-c00f">
     <div class="u-clearfix u-sheet u-sheet-1">
       <p class="u-small-text u-text u-text-variant u-text-1">Sample footer text</p>
     </div>

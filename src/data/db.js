@@ -51,5 +51,13 @@ module.exports = {
             if (err) throw err;
             return callback(null, topic);
         })
+    },
+    deleteUser: function (userID) {
+        const sql = 'DELETE FROM user WHERE id = ?';
+        connection.query(sql, [userID]);
+    },
+    changePwdUser: function (newPwd, userID) {
+        const sql = 'UPDATE user set pwd =? where id =?';
+        connection.query(sql, [newPwd, userID]);
     }
 }

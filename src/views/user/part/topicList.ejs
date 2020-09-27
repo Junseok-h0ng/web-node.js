@@ -1,4 +1,4 @@
-<% topic.forEach(function(topic){ %>
+<% mod.forEach(function(topic){ %>
 <section class="u-clearfix u-section-2" id="sec-e2c3">
     <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
@@ -13,8 +13,16 @@
                         <div class="u-container-layout u-container-layout-2">
                             <p class="u-align-center u-text u-text-2"><%- topic.description %></p>
                             <a href="/topic/<%- topic.id %>" class="u-black u-btn u-button-style u-btn-1">Read More</a>
-                                <p class="u-align-center u-small-text u-text u-text-variant u-text-3">
-                                    by <%= topic.displayname %></p>
+                            <% if(topic.displayname != undefined){ %>
+                            <p class="u-align-center u-small-text u-text u-text-variant u-text-3">
+                                by <%= topic.displayname %></p>
+                            <% }else{ %>
+                            <a href="/topic/update/<%- topic.id %>"
+                                class="u-black u-btn u-button-style u-btn-1">Update</a>
+                            <form action="/topic/delete/<%- topic.id %>" method="POST">
+                                <input type="submit" class="u-black u-btn u-button-style u-btn-1" value="delete">
+                            </form>
+                            <% } %>
                             <p class="u-align-center u-small-text u-text u-text-font u-text-variant u-text-4">
                                 <%= topic.created %>
                             </p>
