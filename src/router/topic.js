@@ -15,11 +15,18 @@ function isWrongAccess(req, userID) {
 }
 
 router.get('/', function (req, res) {
-    db.topicList((err, topic) => {
-        res.render('topic/programming', {
-            userStatus: auth.status(req),
-            topic: topic
-        });
+    const page = req.query.page;
+    let max = page * 3;
+    let min = max - 3;
+    db.topicList(min, (err, topic) => {
+        db.topicLength((err, topicLength) => {
+            res.render('topic/programming', {
+                userStatus: auth.status(req),
+                topic: topic,
+                page: Number(page),
+                topicLength: topicLength
+            });
+        })
     });
 
 });

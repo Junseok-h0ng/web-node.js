@@ -31,8 +31,15 @@ module.exports = {
         const sql = 'DELETE FROM topic WHERE id = ?';
         connection.query(sql, [pageID]);
     },
-    topicList: function (callback) {
-        const sql = 'SELECT topic.*,user.displayname FROM topic LEFT JOIN user ON topic.user_id = user.id';
+    topicLength: function (callback) {
+        const sql = 'SELECT id FROM topic';
+        connection.query(sql, (err, topic) => {
+            if (err) throw err;
+            return callback(null, topic);
+        })
+    },
+    topicList: function (min, callback) {
+        const sql = `SELECT topic.*,user.displayname FROM topic LEFT JOIN user ON topic.user_id = user.id ORDER BY created desc limit ${min}, 3`;
         connection.query(sql, (err, topic) => {
             if (err) throw err;
             return callback(null, topic);
@@ -41,6 +48,13 @@ module.exports = {
     topic: function (id, callback) {
         const sql = 'SELECT * FROM topic WHERE id = ?';
         connection.query(sql, [id], (err, topic) => {
+            if (err) throw err;
+            return callback(null, topic);
+        })
+    },
+    userTopicLength: function (userID, callback) {
+        const sql = `SELECT id FROM topic WHERE id = ${userID}`;
+        connection.query(sql, (err, topic) => {
             if (err) throw err;
             return callback(null, topic);
         })

@@ -51,27 +51,21 @@
   <section class="u-clearfix u-section-3" id="sec-f51f">
     <div class="u-clearfix u-sheet u-sheet-1">
       <ul class="responsive-style1 u-absolute-hcenter u-expanded-height u-pagination u-unstyled u-pagination-1">
-        <li class="disabled prev u-nav-item u-pagination-item">
-          <a class="u-button-style u-nav-link" href="#" style="padding: 40px 12px;">〈</a>
+        <% if(page != 1){ %>
+        <li class="prev u-nav-item u-pagination-item">
+          <a class="u-button-style u-nav-link" href="?page=<%- page -1 %>" style="padding: 40px 12px;">〈</a>
         </li>
+        <%}%>
+        <% for(var i = 0 ; i< Math.ceil(topicLength.length/3); i++){ %>
         <li class="active u-nav-item u-pagination-item">
-          <a class="u-button-style u-nav-link" href="#" style="padding: 40px 12px;">1</a>
+          <a class="u-button-style u-nav-link" href="?page=<%- i+1 %>" style="padding: 40px 12px;"><%- i+1 %></a>
         </li>
-        <li class="u-nav-item u-pagination-item">
-          <a class="u-button-style u-nav-link" href="#" style="padding: 40px 12px;">2</a>
-        </li>
-        <li class="u-nav-item u-pagination-item">
-          <a class="u-button-style u-nav-link" href="#" style="padding: 40px 12px;">3</a>
-        </li>
-        <li class="u-nav-item u-pagination-item u-pagination-separator">
-          <a class="u-button-style u-nav-link" href="#" style="padding: 40px 12px;">...</a>
-        </li>
-        <li class="u-nav-item u-pagination-item">
-          <a class="u-button-style u-nav-link" href="#" style="padding: 40px 12px;">8</a>
-        </li>
+        <%}%>
+        <% if (page != Math.ceil(topicLength.length/3)){ %>
         <li class="next u-nav-item u-pagination-item">
-          <a class="u-button-style u-nav-link" href="#" style="padding: 40px 12px;">〉</a>
+          <a class="u-button-style u-nav-link" href="?page=<%- page +1 %>" style="padding: 40px 12px;">〉</a>
         </li>
+        <%} %>
       </ul>
     </div>
   </section>

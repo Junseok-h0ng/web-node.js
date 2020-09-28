@@ -76,7 +76,6 @@ router.post('/change/:userID', (req, res) => {
         bcrypt.compare(oldPwd, user[0].pwd, (err, result) => {
             //기존 패스워드 일치
             if (result) {
-                console.log(result);
                 //새로운 패스워드 일치시 패스워드 변경
                 if (newPwd === newPwd2) {
                     bcrypt.hash(newPwd, 10, (err, newPwd) => {
