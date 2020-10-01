@@ -4,7 +4,8 @@ const shortid = require('shortid');
 
 module.exports = function (app) {
     const passport = require('passport')
-        , LocalStrategy = require('passport-local').Strategy;
+        , LocalStrategy = require('passport-local').Strategy
+        , GoogleStrategy = require('passport-google-oauth2').Strategy;
 
     app.use(passport.initialize());
     app.use(passport.session());
@@ -43,6 +44,44 @@ module.exports = function (app) {
     }
     ));
 
+    const googleConfig = require('../config/google.json');
+    passport.use(new GoogleStrategy({
+        clientID: "283845528327-a915r4pccmoer6oiau2mjbsabr35il8m.apps.googleusercontent.com",
+        clientSecret: "hA4ENM-apdAXUKc6PbxmJ2cz",
+        callbackURL: 'http://nodejs-web.kro.kr/auth/google/callback'
+    },
+        function (request, accessToken, refreshToken, profile, done) {
+            const email = profile.emails[0].value;
+            db.user('email', email, (err, user) => {
+                if (user[0] && user[0].type === 'Google') {
+                    return done(null, user[0]);
+                } else {
+                    var userInfo = {
+                        id: shortid.generate(),
+                        displayname: profile.displayName,
+                        email: email,
+                        pwd: null,
+                        type: 'Google'
+                    }
+                    console.log(userInfo.id);
+                    db.insertUser(userInfo.id, userInfo);
+                    return done(null, userInfo);
+                }
+            });
+        }
+    ));
+
+    app.get('/auth/google',
+        passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'email'] }));
+
+    app.get('/auth/google/callback',
+        passport.authenticate('google', {
+            failureRedirect: '/user/login'
+        }),
+        function (req, res) {
+            res.redirect('/');
+        });
+
     app.post('/login',
         passport.authenticate('local', {
             successRedirect: '/',
@@ -50,6 +89,7 @@ module.exports = function (app) {
             failureFlash: true
         })
     );
+
     app.post('/register', function (req, res) {
         const user = req.body;
         const id = shortid.generate();
@@ -66,6 +106,7 @@ module.exports = function (app) {
         });
 
         bcrypt.hash(user.password, 10, (err, pwd) => {
+            console.log(id);
             db.insertUser(id, user, pwd);
             user.id = id;
             user.password = pwd;
