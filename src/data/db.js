@@ -53,14 +53,14 @@ module.exports = {
         })
     },
     userTopicLength: function (userID, callback) {
-        const sql = `SELECT id FROM topic WHERE id = ${userID}`;
-        connection.query(sql, (err, topic) => {
+        const sql = 'SELECT id FROM topic WHERE user_id = ?';
+        connection.query(sql, [userID], (err, topic) => {
             if (err) throw err;
             return callback(null, topic);
         })
     },
-    userTopic: function (userID, callback) {
-        const sql = 'SELECT * FROM topic WHERE user_id =?';
+    userTopic: function (min, userID, callback) {
+        const sql = `SELECT * FROM topic WHERE user_id =? ORDER BY created desc limit ${min}, 3`;
         connection.query(sql, [userID], (err, topic) => {
             if (err) throw err;
             return callback(null, topic);

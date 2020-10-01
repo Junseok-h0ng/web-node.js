@@ -4,13 +4,17 @@ const db = require('../data/db');
 const auth = require('../lib/auth');
 const router = express.Router();
 
-function renderPage(req, res, mod) {
+
+
+function renderPage(req, res, mod, page, topicLength) {
     const userID = req.params.userID;
     res.render('user/user_page', {
         userStatus: auth.status(req),
         userID: userID,
         mod: mod,
-        modal: req.flash('error')
+        modal: req.flash('error'),
+        page: Number(page),
+        topicLength: topicLength
     });
 
 }
@@ -33,8 +37,13 @@ router.get('/change/:userID', (req, res) => {
 });
 router.get('/:userID', (req, res) => {
     const userID = req.params.userID;
-    db.userTopic(userID, (err, topic) => {
-        renderPage(req, res, topic);
+    const page = req.query.page;
+    let max = page * 3;
+    let min = max - 3;
+    db.userTopicLength(userID, (err, topicLength) => {
+        db.userTopic(min, userID, (err, topic) => {
+            renderPage(req, res, topic, page, topicLength);
+        });
     });
 });
 

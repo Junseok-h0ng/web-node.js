@@ -13,7 +13,7 @@ module.exports = {
             const user = req.user;
             return `
                 <a class="u-login u-login-1" href="/logout">Logout</a>
-                <a class="u-login u-login-2" href="/user/${user.id}">${user.displayname}</a>`
+                <a class="u-login u-login-2" href="/user/${user.id}?page=1">${user.displayname}</a>`
         } else {
             return `
             <a class="u-login u-login-1" href="/user/login">Login</a>

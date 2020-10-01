@@ -52,7 +52,7 @@
       <nav>
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link active" href="/user/<%- userID %>">글목록</a>
+            <a class="nav-link active" href="/user/<%- userID %>?page=1">글목록</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/user/change/<%- userID %>">패스워드 변경</a>
@@ -70,7 +70,7 @@
 
   <%- include('../part/modal.ejs') %>
   <%if(mod instanceof Object){%>
-  <%- include('./part/list') %>
+  <%- include('./part/topicList.ejs') %>
   <%}else{%>
   <%-include('./part/'+mod)%>
   <%}%>
