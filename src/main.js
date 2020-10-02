@@ -36,12 +36,21 @@ app.get('/', (req, res) => { // (3)
 app.use('/user', require('./router/user'));
 app.use('/topic', require('./router/topic'));
 
-
+//Server Start 80 Port
 const port = 80;
 app.listen(port, () => {
     console.log('server is running localhost:80');
 });
 
+//Server Start 443 Port SSL
+const fs = require('fs');
+const https = require('https');
+const options = {
+    ca: fs.readFileSync('../cert/ca_bundle.crt'),
+    key: fs.readFileSync('../cert/private.key'),
+    cert: fs.readFileSync('../cert/certificate.crt')
+}
+https.createServer(options, app).listen(443, '192.168.35.177');
 
 //sessions으로 user값 넘기기 완료
 //로그인 상태창 변경 완료
@@ -79,4 +88,6 @@ app.listen(port, () => {
 //user register시 한글포함되면 에러 발생 해결
 //웹서버 외부접근 80포트 허용
 //------------------------------------------ 2020/10/01
-//웹서버 외부접근 443 포트 허용
+//웹서버 외부접근 443 포트 허용(SSL)
+//topic 디자인 변경
+//------------------------------------------ 2020/10/02
