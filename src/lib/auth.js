@@ -19,5 +19,12 @@ module.exports = {
             <a class="u-login u-login-1" href="/user/login">Login</a>
             <a class="u-login u-login-2" href="/user/register">Register</a>`
         }
+    },
+    type: function (req) {
+        if (req.user.type) {
+            return 'disabled';
+        } else {
+            return;
+        }
     }
 }

@@ -48,7 +48,7 @@ module.exports = function (app) {
     passport.use(new GoogleStrategy({
         clientID: "283845528327-a915r4pccmoer6oiau2mjbsabr35il8m.apps.googleusercontent.com",
         clientSecret: "hA4ENM-apdAXUKc6PbxmJ2cz",
-        callbackURL: 'http://nodejs-web.kro.kr/auth/google/callback'
+        callbackURL: 'https://nodejs-web.kro.kr/auth/google/callback'
     },
         function (request, accessToken, refreshToken, profile, done) {
             const email = profile.emails[0].value;

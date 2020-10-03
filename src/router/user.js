@@ -10,6 +10,7 @@ function renderPage(req, res, mod, page, topicLength) {
     const userID = req.params.userID;
     res.render('user/user_page', {
         userStatus: auth.status(req),
+        userType: auth.type(req),
         userID: userID,
         mod: mod,
         modal: req.flash('error'),

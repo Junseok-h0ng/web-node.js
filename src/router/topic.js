@@ -18,6 +18,7 @@ router.get('/', function (req, res) {
     const page = req.query.page;
     let max = page * 3;
     let min = max - 3;
+
     db.topicList(min, (err, topic) => {
         db.topicLength((err, topicLength) => {
             res.render('topic/programming', {
@@ -108,7 +109,7 @@ router.post('/update/:pageID', (req, res) => {
 router.post('/delete/:pageID', (req, res) => {
     const pageID = req.params.pageID;
     db.deleteTopic(pageID);
-    res.redirect(`/user/${req.user.id}`);
+    res.redirect(`/user/${req.user.id}?page=1`);
 });
 
 module.exports = router;

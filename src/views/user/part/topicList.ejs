@@ -1,6 +1,6 @@
 <% mod.forEach(function(topic){ %>
-<section class="u-clearfix u-section-2" id="sec-e2c3">
-    <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+<section class="u-clearfix u-section-3" id="sec-0c25">
+    <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
             <div class="u-gutter-0 u-layout">
                 <div class="u-layout-row">
@@ -10,22 +10,18 @@
                         </div>
                     </div>
                     <div class="u-container-style u-layout-cell u-right-cell u-size-47 u-layout-cell-2">
-                        <div class="u-container-layout u-container-layout-2">
-                            <p class="u-align-center u-text u-text-2"><%- topic.description %></p>
-                            <a href="/topic/<%- topic.id %>" class="u-black u-btn u-button-style u-btn-1">Read More</a>
-                            <% if(topic.displayname != undefined){ %>
-                            <p class="u-align-center u-small-text u-text u-text-variant u-text-3">
-                                by <%= topic.displayname %></p>
-                            <% }else{ %>
-                            <a href="/topic/update/<%- topic.id %>"
-                                class="u-black u-btn u-button-style u-btn-1">Update</a>
+                        <div
+                            class="u-container-layout u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs u-container-layout-2">
+                            <p class="u-align-center u-text u-text-2"><%- topic.description.split('</p>')[0] %></p>
                             <form action="/topic/delete/<%- topic.id %>" method="POST">
-                                <input type="submit" class="u-black u-btn u-button-style u-btn-1" value="delete">
+                                <a href="/topic/<%- topic.id %>" class="u-black u-btn u-button-style u-btn-1">Read
+                                    More</a>
+                                <a href="/topic/update/<%- topic.id %>"
+                                    class="u-black u-btn u-button-style u-btn-2">EDIT</a>
+
+                                <input type="submit" class="u-black u-btn u-button-style u-btn-3" value="delete">
                             </form>
-                            <% } %>
-                            <p class="u-align-center u-small-text u-text u-text-font u-text-variant u-text-4">
-                                <%= topic.created %>
-                            </p>
+                            <p class="u-align-center u-text u-text-default u-text-3"><%= topic.created %></p>
                         </div>
                     </div>
                 </div>

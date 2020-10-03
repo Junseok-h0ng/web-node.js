@@ -4,7 +4,9 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const Filestore = require('session-file-store')(session);
 const flash = require('connect-flash');
+const compression = require('compression');
 const app = express();
+
 
 const auth = require('./lib/auth');
 
@@ -19,19 +21,28 @@ app.use(session({
 app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', './views')
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('../public'));
 app.use(flash());
+app.use(compression());
+// app.use((req, res) => {
+//     if (!req.secure) {
+//         res.redirect("https://" + req.headers.host + '/');
+//     }
+// })
+
 
 require('./lib/passport')(app);
 
 app.get('/', (req, res) => { // (3)
+
     res.render("index.ejs", {
         userStatus: auth.status(req),
         modal: req.flash('message')
     });
 });
+
 
 app.use('/user', require('./router/user'));
 app.use('/topic', require('./router/topic'));
@@ -91,3 +102,9 @@ https.createServer(options, app).listen(443, '192.168.35.177');
 //웹서버 외부접근 443 포트 허용(SSL)
 //topic 디자인 변경
 //------------------------------------------ 2020/10/02
+//user 페이지 디자인 변경
+//sns 계정 패스워드 변경 disable 
+//------------------------------------------ 2020/10/03
+//http -> https 리다이렉트
+//notion 연동
+//이미지 저장

@@ -11,7 +11,7 @@
                     </div>
                     <div class="u-container-style u-layout-cell u-right-cell u-size-47 u-layout-cell-2">
                         <div class="u-container-layout u-container-layout-2">
-                            <p class="u-align-center u-text u-text-2"><%- topic.description %></p>
+                            <p class="u-align-center u-text u-text-2"><%- topic.description.split('</p>')[0] %></p>
                             <a href="/topic/<%- topic.id %>" class="u-black u-btn u-button-style u-btn-1">Read More</a>
                             <p class="u-align-center u-small-text u-text u-text-variant u-text-3">
                                 by <%= topic.displayname %></p>
