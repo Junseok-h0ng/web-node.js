@@ -20,6 +20,8 @@
                                     class="u-black u-btn u-button-style u-btn-2">EDIT</a>
 
                                 <input type="submit" class="u-black u-btn u-button-style u-btn-3" value="delete">
+                                <a href="/user/subtopic/<%- userID%>?parent=<%- topic.id %>&page=1"
+                                    class="u-black u-btn u-button-style u-btn-4">Subtopic</a>
                             </form>
                             <p class="u-align-center u-text u-text-default u-text-3"><%= topic.created %></p>
                         </div>
@@ -33,8 +35,14 @@
 
 <section class="u-clearfix u-section-3" id="sec-0c25">
     <div class="u-clearfix u-sheet u-sheet-1">
-        <a href="/topic/create/<%- userID %>"
-            class="u-border-2 u-border-black u-btn u-button-style u-hover-black u-none u-text-black u-text-hover-white u-btn-4">create</a>
+        <% if(parentTopic){%>
+        <a href="/subtopic/create/<%- parentTopic %>" class="u-border-2 u-border-black u-btn u-button-style u-btn-1 u-hover-black u-none u-text-black
+                u-text-hover-white u-btn-1">create</a>
+        <%}else{%>
+        <a href="/topic/create/<%- userID %>" class="u-border-2 u-border-black u-btn u-button-style u-btn-1 u-hover-black u-none u-text-black
+                u-text-hover-white u-btn-1">create</a>
+        <% }%>
+
     </div>
 </section>
 <section class="u-clearfix u-section-3" id="sec-f51f">

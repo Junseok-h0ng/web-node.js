@@ -26,12 +26,15 @@ app.use(bodyParser.json());
 app.use(express.static('../public'));
 app.use(flash());
 app.use(compression());
-// app.use((req, res) => {
-//     if (!req.secure) {
-//         res.redirect("https://" + req.headers.host + '/');
-//     }
-// })
 
+//redirect https
+app.all('*', function (req, res, next) {
+    if (!req.secure) {
+        return res.redirect(`https://${req.hostname}${req.url}`);
+    } else {
+        next();
+    }
+});
 
 require('./lib/passport')(app);
 
@@ -46,9 +49,10 @@ app.get('/', (req, res) => { // (3)
 
 app.use('/user', require('./router/user'));
 app.use('/topic', require('./router/topic'));
-
+app.use('/subtopic', require('./router/subtopic'));
 //Server Start 80 Port
 const port = 80;
+
 app.listen(port, () => {
     console.log('server is running localhost:80');
 });
@@ -106,5 +110,9 @@ https.createServer(options, app).listen(443, '192.168.35.177');
 //sns 계정 패스워드 변경 disable 
 //------------------------------------------ 2020/10/03
 //http -> https 리다이렉트
-//notion 연동
 //이미지 저장
+//subtopic 페이지 , create 생성 및 db 생성
+//------------------------------------------ 2020/10/04
+//subtopic
+//notion 연동
+

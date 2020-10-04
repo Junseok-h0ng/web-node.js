@@ -3,6 +3,8 @@ const shortid = require('shortid');
 const db = require('../data/db');
 const auth = require('../lib/auth');
 const sanitizeHtml = require('sanitize-html');
+var multer = require('multer');
+var uploadImg = multer({ dest: '../public/uploads/images/' });
 const router = express.Router();
 
 function isWrongAccess(req, userID) {
@@ -40,9 +42,11 @@ router.get('/create/:userID', (req, res) => {
 
     res.render('topic/create', {
         userStatus: auth.status(req),
-        userID: userID
+        params: userID,
+        type: 'topic'
     });
-})
+});
+
 router.get('/update/:pageID', (req, res) => {
     const pageID = req.params.pageID;
 
@@ -81,13 +85,13 @@ router.get('/:pageID', (req, res) => {
 })
 
 //생성 프로세스
-router.post('/create/:userID', (req, res) => {
+router.post('/create/:userID', uploadImg.single('userfile'), (req, res) => {
     const post = req.body;
     const userID = req.params.userID;
     const info = {
         id: shortid.generate(),
         title: sanitizeHtml(post.title),
-        description: sanitizeHtml(post.description),
+        description: post.description,
         userID: userID
     }
     db.insertTopic(info);
@@ -100,7 +104,7 @@ router.post('/update/:pageID', (req, res) => {
     const info = {
         id: req.params.pageID,
         title: sanitizeHtml(post.title),
-        description: sanitizeHtml(post.description)
+        description: post.description,
     }
     db.updateTopic(info);
     res.redirect(`/topic/${info.id}`);

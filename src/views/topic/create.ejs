@@ -13,8 +13,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <link rel="stylesheet" href="../../css/nicepage.css" media="screen">
-    <link rel="stylesheet" href="../../css/create.css" media="screen">
+    <link rel="stylesheet" href="/css/nicepage.css" media="screen">
+    <link rel="stylesheet" href="/css/create.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 2.25.0, nicepage.com">
@@ -49,7 +49,11 @@
     <header class="u-align-left u-clearfix u-grey-90 u-header u-header" id="sec-ecdc">
         <%- include('../part/header.ejs') %>
     </header>
-    <form action="/topic/create/<%- userID %>" method="POST">
+    <% if(type == 'sub'){%>
+    <form action="/subtopic/create/<%- params %>" method="POST">
+        <%}else{%>
+        <form action="/topic/create/<%- params %>" method="POST">
+            <%}%>
         <input name="title" placeholder="title" autofocus="autofocus">
         <textarea id="summernote" name="description"></textarea>
         <input type="submit" value="save">
@@ -77,9 +81,15 @@
             $('#summernote').summernote();
         });
         $('#summernote').summernote({
-            height: 500,   //set editable area's height
+            height: 500
         });
     </script>
+
+
+    <!-- <form action='upload' method='post' enctype="multipart/form-data" )>
+        <input type='file' name='userfiled'>
+        <input type='submit'>
+    </form> -->
 </body>
 
 </html>

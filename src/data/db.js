@@ -53,7 +53,7 @@ module.exports = {
         })
     },
     userTopicLength: function (userID, callback) {
-        const sql = 'SELECT id FROM topic WHERE user_id = ?';
+        const sql = `SELECT id FROM topic WHERE user_id = ?`;
         connection.query(sql, [userID], (err, topic) => {
             if (err) throw err;
             return callback(null, topic);
@@ -65,6 +65,50 @@ module.exports = {
             if (err) throw err;
             return callback(null, topic);
         })
+    },
+    subtopicLength: function (parentTopic, callback) {
+        const sql = `SELECT id FROM ${parentTopic}`;
+        connection.query(sql, [parentTopic], (err, subTopic) => {
+            if (err) {
+                return callback(null, false);
+            } else {
+                return callback(null, subTopic);
+            };
+        })
+    },
+    subtopic: function (min, parentTopic, callback) {
+        const sql = `SELECT * FROM ${parentTopic} ORDER BY created desc limit ${min}, 3`;
+        connection.query(sql, [parentTopic], (err, subTopic) => {
+            if (err) {
+                return callback(null, []);
+            } else {
+                return callback(null, subTopic);
+            }
+        });
+    },
+    hasSubtopic: function (parentID) {
+        const sql = `SELECT id FROM ${parentID}`;
+        connection.query(sql, [parentID], (err) => {
+            if (err) {
+                return true;
+            } else {
+                return false;
+            }
+        })
+    },
+    createTable: function (parentID) {
+
+        const sql = `CREATE TABLE ${parentID}(
+            id VARCHAR(9), title VARCHAR(12) PRIMARY KEY, 
+            description TEXT,
+            created DATETIME)`;
+        connection.query(sql);
+    },
+    insertSubtopic: function (info) {
+        if (!this.hasSubtopic(info.parentID)) {
+            this.createTable(info.parentID);
+        }
+        console.log('d');
     },
     deleteUser: function (userID) {
         const sql = 'DELETE FROM user WHERE id = ?';

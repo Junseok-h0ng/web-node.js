@@ -6,13 +6,14 @@ const router = express.Router();
 
 
 
-function renderPage(req, res, mod, page, topicLength) {
+function renderPage(req, res, mod, page, topicLength, parentTopic) {
     const userID = req.params.userID;
     res.render('user/user_page', {
         userStatus: auth.status(req),
         userType: auth.type(req),
         userID: userID,
         mod: mod,
+        parentTopic: parentTopic,
         modal: req.flash('error'),
         page: Number(page),
         topicLength: topicLength
@@ -36,17 +37,26 @@ router.get('/delete/:userID', (req, res) => {
 router.get('/change/:userID', (req, res) => {
     renderPage(req, res, 'change');
 });
+router.get('/subtopic/:userID', (req, res) => {
+    const parent = req.query.parent;
+    const page = req.query.page;
+    let max = page * 3;
+    let min = max - 3;
+    db.subtopic(min, parent, (err, subtopic) => {
+        renderPage(req, res, subtopic, page, subtopic.length, parent);
+    })
+
+})
 router.get('/:userID', (req, res) => {
     const userID = req.params.userID;
     const page = req.query.page;
     let max = page * 3;
     let min = max - 3;
-    db.userTopicLength(userID, (err, topicLength) => {
-        db.userTopic(min, userID, (err, topic) => {
-            renderPage(req, res, topic, page, topicLength);
-        });
+    db.userTopic(min, userID, (err, topic) => {
+        renderPage(req, res, topic, page, topic.length, false);
     });
 });
+
 
 router.post('/delete/:userID', (req, res) => {
     const post = req.body;
