@@ -18,12 +18,7 @@
                                     More</a>
                                 <a href="/topic/update/<%- topic.id %>"
                                     class="u-black u-btn u-button-style u-btn-2">EDIT</a>
-
                                 <input type="submit" class="u-black u-btn u-button-style u-btn-3" value="delete">
-                                <% if(!parentTopic){%>
-                                <a href="/user/subtopic/<%- userID%>?parent=<%- topic.id %>&page=1"
-                                    class="u-black u-btn u-button-style u-btn-4">Subtopic</a>
-                                <%}%>
                             </form>
                             <p class="u-align-center u-text u-text-default u-text-3"><%= topic.created %></p>
                         </div>

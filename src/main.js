@@ -116,5 +116,8 @@ https.createServer(options, app).listen(443, '192.168.35.177');
 //subtopic 페이지 출력 구현
 //------------------------------------------ 2020/10/05
 //topic에서 subtopic 이동 user_page에서 subtopic 출력
+//subtopic create
+//------------------------------------------ 2020/10/05
+//subtopic edit,delete
 //notion 연동
 

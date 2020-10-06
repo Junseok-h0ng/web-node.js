@@ -6,14 +6,14 @@ const router = express.Router();
 
 
 
-function renderPage(req, res, mod, page, topicLength, parentTopic) {
+function renderPage(req, res, mod, page, topicLength, parent) {
     const userID = req.params.userID;
     res.render('user/user_page', {
         userStatus: auth.status(req),
         userType: auth.type(req),
         userID: userID,
         mod: mod,
-        parentTopic: parentTopic,
+        parent: parent,
         modal: req.flash('error'),
         page: Number(page),
         topicLength: topicLength
