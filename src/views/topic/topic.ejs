@@ -8,10 +8,10 @@
   <meta name="description" content="">
   <meta name="page_type" content="np-template-header-footer-from-plugin">
   <title>topic</title>
-  <link rel="stylesheet" href="../css/nicepage.css" media="screen">
-  <link rel="stylesheet" href="../css/topic.css" media="screen">
-  <script class="u-script" type="text/javascript" src="../javascripts/jquery.js" defer=""></script>
-  <script class="u-script" type="text/javascript" src="../javascripts/nicepage.js" defer=""></script>
+  <link rel="stylesheet" href="/css/nicepage.css" media="screen">
+  <link rel="stylesheet" href="/css/topic.css" media="screen">
+  <script class="u-script" type="text/javascript" src="/javascripts/jquery.js" defer=""></script>
+  <script class="u-script" type="text/javascript" src="/javascripts/nicepage.js" defer=""></script>
   <link rel="stylesheet" href="/path/to/styles/default.css">
   <script src="/path/to/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
@@ -57,9 +57,17 @@
         <div class="u-layout-row">
           <div class="u-container-style u-layout-cell u-left-cell u-shape-rectangle u-size-11 u-layout-cell-1">
             <div class="u-container-layout u-valign-top-lg u-valign-top-md u-valign-top-xl u-container-layout-1">
-              <h1 class="u-text u-text-grey-40 u-text-1">subtopic</h1>
-              <h1 class="u-text u-text-grey-40 u-text-2">subtopic</h1>
-              <h1 class="u-text u-text-grey-40 u-text-3">subtopic</h1>
+              <% if(subtopicList[0]){ %>
+              <h1 class="u-text u-text-grey-30 u-text-1"><a href="/topic/<%- subtopicList[0].parent_id %>">main
+                  topic</a>
+              </h1>
+              <%}%>
+
+              <% for(var i = 0 ; i < subtopicList.length; i++){ %>
+              <h1 class="u-text u-text-grey-40 u-text-1"><a
+                  href="/topic/<%- subtopicList[i].parent_id %>/<%- subtopicList[i].id %>"><%- subtopicList[i].title %></a>
+              </h1>
+              <%}%>
             </div>
           </div>
           <div class="u-container-style u-layout-cell u-right-cell u-shape-rectangle u-size-49 u-layout-cell-2">

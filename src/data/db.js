@@ -60,10 +60,17 @@ module.exports = {
         })
     },
     userTopic: function (min, userID, callback) {
-        const sql = `SELECT * FROM topic WHERE user_id =? ORDER BY created desc limit ${min}, 3`;
-        connection.query(sql, [userID], (err, topic) => {
+        const sql = `SELECT * FROM topic WHERE user_id =? ORDER BY created desc limit ?, 3`;
+        connection.query(sql, [userID, min], (err, topic) => {
             if (err) throw err;
             return callback(null, topic);
+        })
+    },
+    userSubtopic: function (min, parent, callback) {
+        const sql = `SELECT * FROM subtopic WHERE parent_id =? ORDER BY created desc limit ? ,3`;
+        connection.query(sql, [parent, min], (err, subtopic) => {
+            if (err) throw err;
+            return callback(null, subtopic);
         })
     },
     subtopicLength: function (parentTopic, callback) {
@@ -76,39 +83,23 @@ module.exports = {
             };
         })
     },
-    subtopic: function (min, parentTopic, callback) {
-        const sql = `SELECT * FROM ${parentTopic} ORDER BY created desc limit ${min}, 3`;
-        connection.query(sql, [parentTopic], (err, subTopic) => {
-            if (err) {
-                return callback(null, []);
-            } else {
-                return callback(null, subTopic);
-            }
+    subtopicList: function (parentID, callback) {
+        const sql = 'SELECT * FROM subtopic WHERE parent_id = ?';
+        connection.query(sql, [parentID], (err, subtopicList) => {
+            if (err) throw err;
+            return callback(null, subtopicList);
         });
     },
-    hasSubtopic: function (parentID) {
-        const sql = `SELECT id FROM ${parentID}`;
-        connection.query(sql, [parentID], (err) => {
-            if (err) {
-                return true;
-            } else {
-                return false;
-            }
-        })
-    },
-    createTable: function (parentID) {
-
-        const sql = `CREATE TABLE ${parentID}(
-            id VARCHAR(9), title VARCHAR(12) PRIMARY KEY, 
-            description TEXT,
-            created DATETIME)`;
-        connection.query(sql);
+    subtopic: function (subpageID, callback) {
+        const sql = 'SELECT * FROM subtopic WHERE id = ?';
+        connection.query(sql, [subpageID], (err, subtopic) => {
+            if (err) throw err;
+            return callback(null, subtopic);
+        });
     },
     insertSubtopic: function (info) {
-        if (!this.hasSubtopic(info.parentID)) {
-            this.createTable(info.parentID);
-        }
-        console.log('d');
+        const sql = 'INSERT INTO subtopic(id,title,description,parent_id,created) VALUES(?,?,?,?,NOW())';
+        connection.query(sql, [info.id, info.title, info.description, info.parentID]);
     },
     deleteUser: function (userID) {
         const sql = 'DELETE FROM user WHERE id = ?';

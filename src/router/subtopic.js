@@ -17,7 +17,6 @@ router.get('/create/:parent', (req, res) => {
 router.post('/create/:parentID', (req, res) => {
     const parentID = req.params.parentID;
     const post = req.body;
-    console.log(parentID);
     const info = {
         id: shortid.generate(),
         title: post.title,
@@ -25,5 +24,6 @@ router.post('/create/:parentID', (req, res) => {
         parentID: parentID
     }
     db.insertSubtopic(info);
-})
+    res.redirect(`/topic/${parentID}/${info.id}`)
+});
 module.exports = router;

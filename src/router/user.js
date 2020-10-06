@@ -18,7 +18,6 @@ function renderPage(req, res, mod, page, topicLength, parentTopic) {
         page: Number(page),
         topicLength: topicLength
     });
-
 }
 
 router.get('/login', function (req, res) {
@@ -42,9 +41,9 @@ router.get('/subtopic/:userID', (req, res) => {
     const page = req.query.page;
     let max = page * 3;
     let min = max - 3;
-    db.subtopic(min, parent, (err, subtopic) => {
+    db.userSubtopic(min, parent, (err, subtopic) => {
         renderPage(req, res, subtopic, page, subtopic.length, parent);
-    })
+    });
 
 })
 router.get('/:userID', (req, res) => {

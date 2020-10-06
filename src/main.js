@@ -113,6 +113,8 @@ https.createServer(options, app).listen(443, '192.168.35.177');
 //이미지 저장
 //subtopic 페이지 , create 생성 및 db 생성
 //------------------------------------------ 2020/10/04
-//subtopic
+//subtopic 페이지 출력 구현
+//------------------------------------------ 2020/10/05
+//topic에서 subtopic 이동 user_page에서 subtopic 출력
 //notion 연동
 

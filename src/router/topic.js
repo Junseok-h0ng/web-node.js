@@ -71,17 +71,32 @@ router.get('/update/:pageID', (req, res) => {
 router.get('/:pageID', (req, res) => {
     const pageID = req.params.pageID;
     db.topic(pageID, (err, topic) => {
-        //잘못된 접근시 에러 처리
         if (topic[0] == undefined) {
+            //잘못된 접근시 에러 처리
             req.flash('message', '비정상적인 접근 입니다.');
             return res.redirect('/');
         }
-        res.render('topic/topic', {
-            userStatus: auth.status(req),
-            topic: topic[0]
-        });
-    })
-
+        db.subtopicList(pageID, (err, subtopicList) => {
+            res.render('topic/topic', {
+                userStatus: auth.status(req),
+                topic: topic[0],
+                subtopicList: subtopicList
+            });
+        })
+    });
+});
+router.get('/:pageID/:subpageID', (req, res) => {
+    const pageID = req.params.pageID;
+    const subpageID = req.params.subpageID;
+    db.subtopic(subpageID, (err, subtopic) => {
+        db.subtopicList(pageID, (err, subtopicList) => {
+            res.render('topic/topic', {
+                userStatus: auth.status(req),
+                topic: subtopic[0],
+                subtopicList: subtopicList
+            });
+        })
+    });
 })
 
 //생성 프로세스
