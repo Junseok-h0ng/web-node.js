@@ -64,7 +64,8 @@ router.get('/update/:pageID', (req, res) => {
         res.render('topic/update', {
             userStatus: auth.status(req),
             pageID: pageID,
-            topic: topic[0]
+            topic: topic[0],
+            type: "topic"
         });
     });
 });

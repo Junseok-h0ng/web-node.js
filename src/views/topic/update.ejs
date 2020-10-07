@@ -13,13 +13,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <link rel="stylesheet" href="../../css/nicepage.css" media="screen">
-    <link rel="stylesheet" href="../../css/create.css" media="screen">
+    <link rel="stylesheet" href="/css/nicepage.css" media="screen">
+    <link rel="stylesheet" href="/css/create.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 2.25.0, nicepage.com">
-
-
     <link id="u-theme-google-font" rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
     <script type="application/ld+json">{
@@ -49,7 +47,8 @@
     <header class="u-align-left u-clearfix u-grey-90 u-header u-header" id="sec-ecdc">
         <%- include('../part/header.ejs') %>
     </header>
-    <form action="/topic/update/<%- pageID %>" method="POST">
+
+    <form action="/<%- type %>/update/<%- pageID %>" method="POST">
         <input name="title" placeholder="title" autofocus="autofocus" value="<%- topic.title %>">
         <textarea id="summernote" name="description"><%- topic.description %></textarea>
         <input type="submit" value="save">

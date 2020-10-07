@@ -29,7 +29,9 @@ module.exports = {
     },
     deleteTopic: function (pageID) {
         const sql = 'DELETE FROM topic WHERE id = ?';
+        const subsql = 'DELETE FROM subtopic WHERE parent_id = ?';
         connection.query(sql, [pageID]);
+        connection.query(subsql, [pageID]);
     },
     topicLength: function (callback) {
         const sql = 'SELECT id FROM topic';
@@ -84,7 +86,7 @@ module.exports = {
         })
     },
     subtopicList: function (parentID, callback) {
-        const sql = 'SELECT * FROM subtopic WHERE parent_id = ?';
+        const sql = 'SELECT * FROM subtopic WHERE parent_id = ? ORDER BY created';
         connection.query(sql, [parentID], (err, subtopicList) => {
             if (err) throw err;
             return callback(null, subtopicList);
@@ -101,12 +103,32 @@ module.exports = {
         const sql = 'INSERT INTO subtopic(id,title,description,parent_id,created) VALUES(?,?,?,?,NOW())';
         connection.query(sql, [info.id, info.title, info.description, info.parentID]);
     },
+    updateSubtopic: function (info, callback) {
+        const sql = 'UPDATE subtopic set title=?,description=?,created=NOW() WHERE id = ?';
+        connection.query(sql, [info.title, info.description, info.id]
+            , (this.subtopic(info.id, (err, subtopic) => {
+                return callback(null, subtopic[0].parent_id);
+            })));
+    },
+    deleteSubtopic: function (subtopicID) {
+        const sql = 'DELETE FROM subtopic WHERE id = ?';
+        connection.query(sql, [subtopicID]);
+    },
     deleteUser: function (userID) {
         const sql = 'DELETE FROM user WHERE id = ?';
-        const deleteAllTopic = 'DELETE FROM topic WHERE user_id =?';
-        connection.query(deleteAllTopic, [userID]);
-        connection.query(sql, [userID]);
+        // const deleteAllTopic = 'DELETE FROM topic WHERE user_id =?';
+        // connection.query(deleteAllTopic, [userID]);
+        // deleteAllTopic(userID)
+        connection.query(sql, [userID], () => this.deleteAllTopic(userID));
 
+    },
+    deleteAllTopic(userID) {
+        // connection.query('SELECT id FROM topic WHERE user_id =?', [userID], (err, topicID) => {
+        //     for (var i = 0; i < topicID.length; i++) {
+        //         connection.query('DELETE FROM subtopic WHERE parent_id = ?', [topicID[i]]);
+        //     }
+        // connection.query('DELETE FROM topic WHERE id = ?', [topicID]);
+        // });
     },
     changePwdUser: function (newPwd, userID) {
         const sql = 'UPDATE user set pwd =? where id =?';

@@ -16,7 +16,7 @@
                             <form action="/topic/delete/<%- topic.id %>" method="POST">
                                 <a href="/topic/<%- topic.id %>" class="u-black u-btn u-button-style u-btn-1">Read
                                     More</a>
-                                <a href="/topic/update/<%- topic.id %>"
+                                <a href="/subtopic/update/<%- topic.parent_id %>/<%- topic.id %>"
                                     class="u-black u-btn u-button-style u-btn-2">EDIT</a>
                                 <input type="submit" class="u-black u-btn u-button-style u-btn-3" value="delete">
                             </form>
