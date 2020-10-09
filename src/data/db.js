@@ -29,9 +29,8 @@ module.exports = {
     },
     deleteTopic: function (pageID) {
         const sql = 'DELETE FROM topic WHERE id = ?';
-        const subsql = 'DELETE FROM subtopic WHERE parent_id = ?';
         connection.query(sql, [pageID]);
-        connection.query(subsql, [pageID]);
+        deleteParentIDSubtopic(pageID);
     },
     topicLength: function (callback) {
         const sql = 'SELECT id FROM topic';
@@ -116,22 +115,29 @@ module.exports = {
     },
     deleteUser: function (userID) {
         const sql = 'DELETE FROM user WHERE id = ?';
-        // const deleteAllTopic = 'DELETE FROM topic WHERE user_id =?';
-        // connection.query(deleteAllTopic, [userID]);
-        // deleteAllTopic(userID)
-        connection.query(sql, [userID], () => this.deleteAllTopic(userID));
+        connection.query(sql, [userID], deleteUserTopic(userID));
+    },
 
-    },
-    deleteAllTopic(userID) {
-        // connection.query('SELECT id FROM topic WHERE user_id =?', [userID], (err, topicID) => {
-        //     for (var i = 0; i < topicID.length; i++) {
-        //         connection.query('DELETE FROM subtopic WHERE parent_id = ?', [topicID[i]]);
-        //     }
-        // connection.query('DELETE FROM topic WHERE id = ?', [topicID]);
-        // });
-    },
     changePwdUser: function (newPwd, userID) {
         const sql = 'UPDATE user set pwd =? where id =?';
         connection.query(sql, [newPwd, userID]);
     }
+}
+
+function deleteUserTopic(userID) {
+    selectUserTopic(userID, (err, parentID) => {
+        for (var i = 0; i < parentID.length; i++) {
+            deleteParentIDSubtopic(parentID[i].id);
+        }
+    });
+    connection.query('DELETE FROM topic WHERE user_id =?', [userID]);
+}
+function selectUserTopic(userID, callback) {
+    connection.query('SELECT id FROM topic WHERE user_id = ?', [userID], (err, topicID) => {
+        if (err) throw err;
+        return callback(null, topicID);
+    });
+}
+function deleteParentIDSubtopic(parentID) {
+    connection.query('DELETE FROM subtopic WHERE parent_id = ?', [parentID]);
 }
